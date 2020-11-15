@@ -1,0 +1,60 @@
+﻿@page
+@model IndexModel  
+@{
+    ViewData["Title"] = "Home";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Loan Calculator!</h1>
+    <p></p>
+
+    <form method="post">
+        <p>
+            Amount: <input type="text" asp-for="Amount" />
+            <span asp-validation-for="Amount"></span>
+        </p>
+        <p>
+            Number of years: <input type="text" asp-for="NumberOfYears" />
+            <span asp-validation-for="NumberOfYears"></span>
+        </p>
+        <p>
+            <input type="submit" value="Calculate" />
+        </p>
+    </form>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Term</th>
+                <th>To pay</th>
+                <th>Principal</th>
+                <th>Interest</th>
+                <th>Outstanding debt</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+                foreach (var item in Model.Payments ?? Enumerable.Empty<Loan.Models.PaymentPlanModel>())
+                {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Term)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TermTotalAmount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Principal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Interest)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OutstandingDebt)
+                </td>
+            </tr>
+                }
+
+        </tbody>
+    </table>
+
+</div>
